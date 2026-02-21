@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-purple: #4b1d3f;
+  --brand-pink: #e91e63;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 font-outfit;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.glass-morphism {
+  @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-xl;
+}
+
+.brand-gradient {
+  @apply bg-gradient-to-br from-brand-purple to-brand-pink;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-purple to-brand-pink;
+}
