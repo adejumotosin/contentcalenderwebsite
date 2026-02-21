@@ -19,6 +19,14 @@ function App() {
   // Load data from Supabase on mount
   useEffect(() => {
     async function fetchData() {
+      if (!supabase) {
+        console.log('Supabase not configured. Using local data.');
+        const saved = localStorage.getItem('calendar_data');
+        if (saved) setData(JSON.parse(saved));
+        setLoading(false);
+        return;
+      }
+
       try {
         const { data: dbData, error } = await supabase
           .from('content_calendar')
@@ -27,7 +35,7 @@ function App() {
           .single();
 
         if (error) {
-          console.log('Using local fallback (Supabase not configured or row missing)');
+          console.log('Using local fallback (Row missing or DB error)');
           const saved = localStorage.getItem('calendar_data');
           if (saved) setData(JSON.parse(saved));
         } else if (dbData && dbData.payload) {
@@ -45,9 +53,11 @@ function App() {
   // Save data to Supabase and localStorage on change
   useEffect(() => {
     async function persistData() {
-      if (loading) return; // Don't overwrite with initial data before fetch completes
+      if (loading) return;
 
       localStorage.setItem('calendar_data', JSON.stringify(data));
+
+      if (!supabase) return;
 
       try {
         await supabase

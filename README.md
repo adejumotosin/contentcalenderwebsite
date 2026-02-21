@@ -40,6 +40,16 @@ To ensure your changes are permanent and sync across devices for free, follow th
    VITE_SUPABASE_ANON_KEY=your_key_here
    ```
 
+## 🚀 Vercel Deployment Tips
+
+If you are using Vercel, make sure to:
+1. Go to your project **Settings > Environment Variables**.
+2. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` with the values from Supabase.
+3. Redeploy the project.
+
+> [!TIP]
+> The app will still work without these keys, but it will only save changes in your browser's local storage instead of the cloud.
+
 ## Getting Started
 
 ### Installation
