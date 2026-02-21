@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Layers, Video, MessageSquare, ChevronRight } from 'lucide-react';
+import { Layers, Video, MessageSquare, ChevronRight, Trash2 } from 'lucide-react';
 
 const formatIcon = (format) => {
     if (format.includes('Carousel')) return <Layers size={18} />;
@@ -8,21 +8,35 @@ const formatIcon = (format) => {
     return <MessageSquare size={18} />;
 };
 
-export default function PostCard({ post, onClick }) {
+export default function PostCard({ post, onClick, isAdmin, onDelete }) {
     return (
         <motion.div
             whileHover={{ y: -5, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onClick}
-            className="glass-morphism rounded-3xl p-6 cursor-pointer group flex flex-col h-full"
+            className="glass-morphism rounded-3xl p-6 cursor-pointer group flex flex-col h-full relative overflow-hidden"
         >
             <div className="flex items-start justify-between mb-4">
                 <div className={`p-2 rounded-xl bg-slate-100 text-slate-600 group-hover:brand-gradient group-hover:text-white transition-all duration-500`}>
                     {formatIcon(post.format)}
                 </div>
-                <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400 group-hover:text-brand-pink transition-colors">
-                    {post.day} {post.date}
-                </span>
+                <div className="flex flex-col items-end gap-1">
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400 group-hover:text-brand-pink transition-colors">
+                        {post.day} {post.date}
+                    </span>
+                    {isAdmin && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onDelete();
+                            }}
+                            className="p-1 text-slate-300 hover:text-red-500 transition-colors z-10"
+                            title="Delete Post"
+                        >
+                            <Trash2 size={14} />
+                        </button>
+                    )}
+                </div>
             </div>
 
             <div className="flex-1">
