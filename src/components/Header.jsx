@@ -1,16 +1,25 @@
 import React from 'react';
-import { Calendar, Info, BarChart3, Lock, Unlock, Download } from 'lucide-react';
+import { Calendar, Info, BarChart3, Lock, Unlock, Download, Cloud, CloudOff } from 'lucide-react';
 
-export default function Header({ onToggleStrategy, isAdmin, onToggleAdmin, onExport }) {
+export default function Header({ onToggleStrategy, isAdmin, onToggleAdmin, onExport, isCloudSyncActive }) {
     return (
         <header className="fixed top-0 left-0 right-0 z-50 glass-morphism h-16 px-6 flex items-center justify-between">
             <div className="flex items-center gap-3">
                 <div className="w-10 h-10 brand-gradient rounded-xl flex items-center justify-center text-white shadow-lg">
                     <Calendar size={24} />
                 </div>
-                <div>
+                <div className="hidden xs:block">
                     <h1 className="text-xl font-bold text-gradient leading-tight">@theoyedolayo</h1>
-                    <p className="text-[10px] text-slate-500 uppercase tracking-tighter">Content Calendar 2026</p>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                        <div
+                            className={`w-1.5 h-1.5 rounded-full animate-pulse ${isCloudSyncActive ? 'bg-emerald-500' : 'bg-amber-500'}`}
+                            title={isCloudSyncActive ? 'Cloud Sync Online' : 'Local Mode Only (Changes won\'t sync)'}
+                        />
+                        <p className="text-[10px] text-slate-500 uppercase tracking-tighter flex items-center gap-1">
+                            {isCloudSyncActive ? <Cloud size={10} /> : <CloudOff size={10} />}
+                            {isCloudSyncActive ? 'Cloud Active' : 'Local Fallback'}
+                        </p>
+                    </div>
                 </div>
             </div>
 
